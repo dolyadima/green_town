@@ -1,6 +1,13 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from rest_framework import generics
+from apps.trees.models import Tree
+from apps.trees.serializers import TreeSerializer
 
 
-def index(request):
-    return HttpResponse('<p align="center"> Hello World!</p>')
+class TreeList(generics.ListCreateAPIView):
+    queryset = Tree.objects.all()
+    serializer_class = TreeSerializer
+
+
+class TreeDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Tree.objects.all()
+    serializer_class = TreeSerializer

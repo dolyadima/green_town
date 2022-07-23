@@ -10,27 +10,27 @@ class Tree(models.Model):
     crown_radius = models.FloatField(_('радиус кроны'), default=0.0)
     age = models.PositiveIntegerField(_('возраст'), default=0)
 
-    class Types(models.TextChoices):
-        PIHTA = (1, _('пихта')),
-        EL = (2, _('ель')),
-        SOSNA = (3, _('сосна')),
-        LISTVENNICA = (4, _('лиственница')),
-        BEREZA = (5, _('берёза')),
-        LIPA = (6, _('липа')),
-        DUB = (7, _('дуб')),
-        OSINA = (8, _('осина')),
-        KLEN = (9, _('клён')),
-        KASHTAN = (10, _('каштан')),
+    class Types(models.IntegerChoices):
+        PIHTA = (1, _('пихта'))
+        EL = (2, _('ель'))
+        SOSNA = (3, _('сосна'))
+        LISTVENNICA = (4, _('лиственница'))
+        BEREZA = (5, _('берёза'))
+        LIPA = (6, _('липа'))
+        DUB = (7, _('дуб'))
+        OSINA = (8, _('осина'))
+        KLEN = (9, _('клён'))
+        KASHTAN = (10, _('каштан'))
     type = models.PositiveSmallIntegerField(_('вид'), choices=Types.choices, default=Types.KASHTAN)
 
-    class Condition(models.TextChoices):
-        GOOD = (1, _('хорошее')),
-        MIDDLE = (2, _('среднее')),
-        BAD = (3, _('плохое')),
+    class Condition(models.IntegerChoices):
+        GOOD = (1, _('хорошее'))
+        MIDDLE = (2, _('среднее'))
+        BAD = (3, _('плохое'))
     condition = models.PositiveSmallIntegerField(_('состояние'), choices=Condition.choices, default=Condition.GOOD)
 
-    photo_path = models.FilePathField(_('фото'))
-    list_tasks = ArrayField(models.CharField(max_length=255), blank=True)
+    photo_path = models.FileField(_('фото'), default='/trees/img/default_tree.png')  # get from static and put into media
+    list_tasks = ArrayField(models.CharField(max_length=255), default=list)
 
     class Meta:
         verbose_name = 'Tree'
