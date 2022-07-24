@@ -4,7 +4,7 @@ from apps.trees import views
 
 
 urlpatterns = [
-    path('api/', views.TreeList.as_view()),
+    path('api/', views.TreesList.as_view()),
     path('api/<int:pk>/', views.TreeDetail.as_view()),
 ]
 

@@ -29,12 +29,12 @@ class Tree(models.Model):
         BAD = (3, _('плохое'))
     condition = models.PositiveSmallIntegerField(_('состояние'), choices=Condition.choices, default=Condition.GOOD)
 
-    photo_path = models.FileField(_('фото'), default='/trees/img/default_tree.png')  # get from static and put into media
+    photo_path = models.FileField(_('фото'), default='/trees/img/000_tree.png')  # get from static and put into media
     list_tasks = ArrayField(models.CharField(max_length=255), default=list)
 
     class Meta:
-        verbose_name = 'Tree'
-        verbose_name_plural = 'Trees'
+        verbose_name = 'Дерево'
+        verbose_name_plural = 'Деревья'
 
     def __str__(self):
-        return f'{self.registration_number} {self.type}'
+        return f'{self.get_type_display()}: {self.registration_number}'
