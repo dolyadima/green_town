@@ -107,18 +107,6 @@ export default {
     await this.fetchTrees();
   },
   methods: {
-    // doFilter() {
-    //   if (this.age === 1 && this.radius === 1 && this.tasks === 1) {
-    //     this.filter_trees = this.trees;
-    //   }
-    //   // else if ()
-    //   //   statement2
-    //   // else if ()
-    //   //
-    //   // else
-    //   //
-    //   this.$forceUpdate()
-    // },
     radio: function (event) {
       const targetId = parseInt(event.currentTarget.id.slice(-1));
       switch (targetId) {
@@ -140,23 +128,37 @@ export default {
       }
       this.filter_trees = this.trees;
       if (this.age === 2) {
-        //
+        this.filter_trees = this.filter_trees.filter(el => {
+          return el.age < 10;
+        });
       }
-      else { // 3
-        //
+      else if (this.age === 3) {
+        this.filter_trees = this.filter_trees.filter(el => {
+          return el.age >= 10;
+        });
       }
       if (this.radius === 5) {
-        //
+        this.filter_trees = this.filter_trees.filter(el => {
+          return el.crown_radius < 4.0;
+        });
       }
-      else { // 6
-        //
+      else if (this.radius === 6) {
+        this.filter_trees = this.filter_trees.filter(el => {
+          return el.crown_radius >= 4.0;
+        });
       }
       if (this.tasks === 8) {
-        //
+        this.filter_trees = this.filter_trees.filter(el => {
+          return el.list_tasks.length > 0;
+        });
       }
-      else { // 9
-        //
+      else if (this.tasks === 9) {
+        this.filter_trees = this.filter_trees.filter(el => {
+          return el.list_tasks.length === 0;
+        });
       }
+      console.log(this.filter_trees.length);
+      this.$forceUpdate();
     },
     async fetchTrees(url) {
         let targetUrl = url ? url : '/api/';
@@ -168,7 +170,8 @@ export default {
         res = await fetch(targetUrl);
         data = await res.json();
         this.trees = this.trees.concat(data["results"]);
-        this.filter_trees = this.trees
+        this.filter_trees = this.trees;
+        this.$forceUpdate();
       }
     }
   }
