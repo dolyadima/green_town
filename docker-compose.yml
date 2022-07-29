@@ -27,7 +27,7 @@ services:
     command: /bin/bash -c 'pip install -r requirements.txt && ./manage.py runserver 0.0.0.0:8000'
 
   ui:
-    image: node:16.16.0
+    image: node:16.14.2
     volumes:
       - ./client:/src
     ports:
