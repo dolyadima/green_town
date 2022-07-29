@@ -1,10 +1,15 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.postgres.fields import ArrayField
+from django.utils.crypto import get_random_string
+
+
+def get_id_trees():
+    return get_random_string(32)
 
 
 class Tree(models.Model):
-    registration_number = models.CharField(_('регистрационный номер'), max_length=255)
+    registration_number = models.CharField(_('регистрационный номер'), max_length=255, default=get_id_trees)
     x_coord = models.FloatField(_('широта'), default=0.0)  # latitude
     y_coord = models.FloatField(_('долгота'), default=0.0)  # longitude
     crown_radius = models.FloatField(_('радиус кроны'), default=0.0)
@@ -30,7 +35,7 @@ class Tree(models.Model):
     condition = models.PositiveSmallIntegerField(_('состояние'), choices=Condition.choices, default=Condition.GOOD)
 
     photo_path = models.FileField(_('фото'), default='/trees/img/000_tree.png')  # get from static and put into media
-    list_tasks = ArrayField(models.CharField(max_length=255), default=list)
+    list_tasks = ArrayField(models.CharField(max_length=255), blank=True, default=list)
 
     class Meta:
         verbose_name = 'Дерево'
